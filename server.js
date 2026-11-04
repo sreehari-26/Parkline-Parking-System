@@ -1,15 +1,20 @@
 require("dotenv").config();
 
+const path = require("path");
 const express = require("express");
 const cors = require("cors");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const db = require("./db");
+const { sendBookingReceipt } = require("./mailer");
 
 const app = express();
 
 app.use(cors());
 app.use(express.json());
+
+// Serve the website (public/index.html) from the same server.
+app.use(express.static(path.join(__dirname, "public")));
 
 // ----------------------------------
 // CONFIG
@@ -19,6 +24,8 @@ const PORT = process.env.PORT || 3000;
 const RATE_PER_HOUR = 50; // INR per hour
 const MAX_BOOKING_HOURS = 24;
 const PAST_GRACE_MINUTES = 5;
+const MAX_ADVANCE_DAYS = 90;
+const ADMIN_USERNAME = (process.env.ADMIN_USERNAME || "admin").toLowerCase();
 
 const JWT_SECRET = process.env.JWT_SECRET || "dev-only-secret-change-me";
 
@@ -37,16 +44,58 @@ const PLATE_REGEX = /^[A-Z]{2} \d{1,2} [A-Z]{1,3} \d{1,4}$/;
 // Wrap async route handlers so errors go to the error handler below.
 const wrap = fn => (req, res, next) => Promise.resolve(fn(req, res, next)).catch(next);
 
+// Rejects impossible dates such as 2026-02-31 or 25:00.
+function isRealDateTime(v) {
+    const [datePart, timePart] = v.split(" ");
+    const [y, m, d] = datePart.split("-").map(Number);
+    const [hh, mm, ss] = timePart.split(":").map(Number);
+
+    const dt = new Date(y, m - 1, d, hh, mm, ss || 0);
+
+    return (
+        dt.getFullYear() === y &&
+        dt.getMonth() === m - 1 &&
+        dt.getDate() === d &&
+        dt.getHours() === hh &&
+        dt.getMinutes() === mm
+    );
+}
+
 function normalizeDateTime(value) {
     if (typeof value !== "string" || !DATETIME_REGEX.test(value.trim())) return null;
 
     const v = value.trim();
+    const full = v.length === 16 ? v + ":00" : v;
 
-    return v.length === 16 ? v + ":00" : v;
+    return isRealDateTime(full) ? full : null;
 }
 
 function toDate(dateTimeString) {
     return new Date(dateTimeString.replace(" ", "T"));
+}
+
+// Sends the booking receipt email. Never blocks or breaks a booking.
+async function sendReceiptFor(bookingId) {
+    const [rows] = await db.query(
+        `SELECT b.booking_id, b.start_time, b.end_time, b.amount,
+                u.username, u.email,
+                l.lot_name, l.address,
+                s.floor_number, s.slot_number,
+                v.vehicle_number
+         FROM bookings b
+         JOIN users u ON u.user_id = b.user_id
+         JOIN parking_lots l ON l.lot_id = b.lot_id
+         JOIN parking_slots s ON s.slot_id = b.slot_id
+         JOIN vehicles v ON v.vehicle_id = b.vehicle_id
+         WHERE b.booking_id = ?`,
+        [bookingId]
+    );
+
+    if (rows.length) await sendBookingReceipt(rows[0]);
+}
+
+function isAdminName(username) {
+    return String(username || "").toLowerCase() === ADMIN_USERNAME;
 }
 
 function signToken(user) {
@@ -61,7 +110,8 @@ function publicUser(user) {
     return {
         user_id: user.user_id,
         username: user.username,
-        email: user.email
+        email: user.email,
+        is_admin: isAdminName(user.username)
     };
 }
 
@@ -79,6 +129,14 @@ function requireAuth(req, res, next) {
     } catch {
         return res.status(401).json({ error: "Your session has expired. Please log in again" });
     }
+}
+
+function requireAdmin(req, res, next) {
+    if (!isAdminName(req.user && req.user.username)) {
+        return res.status(403).json({ error: "Admin access only" });
+    }
+
+    next();
 }
 
 // ----------------------------------
@@ -116,6 +174,10 @@ app.post("/api/auth/signup", wrap(async (req, res) => {
 
     if (password.length < 6) {
         return res.status(400).json({ error: "Use a password with at least 6 characters." });
+    }
+
+    if (isAdminName(username)) {
+        return res.status(409).json({ error: "That username is reserved." });
     }
 
     const [existing] = await db.query(
@@ -485,14 +547,23 @@ app.post("/api/bookings", requireAuth, wrap(async (req, res) => {
             return res.status(400).json({ error: "This space is not suitable for your vehicle type." });
         }
 
-        const [pastRows] = await conn.query(
-            "SELECT (? < NOW() - INTERVAL ? MINUTE) AS in_past",
-            [startTime, PAST_GRACE_MINUTES]
+        const [timeRows] = await conn.query(
+            `SELECT
+                (? < NOW() - INTERVAL ? MINUTE) AS in_past,
+                (? > NOW() + INTERVAL ? DAY) AS too_far`,
+            [startTime, PAST_GRACE_MINUTES, startTime, MAX_ADVANCE_DAYS]
         );
 
-        if (Number(pastRows[0].in_past) === 1) {
+        if (Number(timeRows[0].in_past) === 1) {
             await conn.rollback();
             return res.status(400).json({ error: "The start time has already passed." });
+        }
+
+        if (Number(timeRows[0].too_far) === 1) {
+            await conn.rollback();
+            return res.status(400).json({
+                error: `Bookings can be made up to ${MAX_ADVANCE_DAYS} days ahead.`
+            });
         }
 
         const [slotClash] = await conn.query(
@@ -538,6 +609,11 @@ app.post("/api/bookings", requireAuth, wrap(async (req, res) => {
 
         await conn.commit();
 
+        // Fire and forget: a failed email must not fail the booking.
+        sendReceiptFor(bookingResult.insertId).catch(err =>
+            console.error("Receipt email failed:", err.message)
+        );
+
         res.status(201).json({
             booking_id: bookingResult.insertId,
             amount,
@@ -550,6 +626,242 @@ app.post("/api/bookings", requireAuth, wrap(async (req, res) => {
     } finally {
         conn.release();
     }
+}));
+
+// ----------------------------------
+// ADMIN ANALYTICS
+// ----------------------------------
+
+const num = v => Number(v) || 0;
+
+function lastNDays(todayString, n) {
+    const [y, m, d] = todayString.split("-").map(Number);
+    const days = [];
+
+    for (let i = n - 1; i >= 0; i--) {
+        days.push(new Date(Date.UTC(y, m - 1, d - i)).toISOString().slice(0, 10));
+    }
+
+    return days;
+}
+
+const ACTIVE_NOW = "b.status IN ('PENDING', 'CONFIRMED') AND b.start_time <= NOW() AND b.end_time > NOW()";
+
+app.get("/api/admin/analytics", requireAuth, requireAdmin, wrap(async (req, res) => {
+
+    const [
+        [[today]],
+        [[money]],
+        [[pay]],
+        [[book]],
+        [[slotTotals]],
+        [slotTypes],
+        [byLot],
+        [byDay],
+        [byHour],
+        [byStatus],
+        [[people]],
+        [recent]
+    ] = await Promise.all([
+
+        db.query("SELECT DATE_FORMAT(CURDATE(), '%Y-%m-%d') AS today"),
+
+        db.query(`
+            SELECT
+                COALESCE(SUM(CASE WHEN status <> 'CANCELLED' THEN amount END), 0) AS total,
+                COALESCE(SUM(CASE WHEN status <> 'CANCELLED' AND DATE(start_time) = CURDATE() THEN amount END), 0) AS today,
+                COALESCE(SUM(CASE WHEN status <> 'CANCELLED'
+                    AND start_time >= DATE_FORMAT(NOW(), '%Y-%m-01') THEN amount END), 0) AS month
+            FROM bookings`),
+
+        db.query(`
+            SELECT
+                COALESCE(SUM(CASE WHEN payment_status = 'SUCCESS' THEN amount END), 0) AS collected,
+                COALESCE(SUM(CASE WHEN payment_status = 'PENDING' THEN amount END), 0) AS pending,
+                COALESCE(SUM(CASE WHEN payment_status = 'REFUNDED' THEN amount END), 0) AS refunded
+            FROM payments`),
+
+        db.query(`
+            SELECT
+                COUNT(*) AS total,
+                COALESCE(SUM(status <> 'CANCELLED'), 0) AS valid,
+                COALESCE(SUM(status = 'CANCELLED'), 0) AS cancelled,
+                COALESCE(SUM(status IN ('PENDING', 'CONFIRMED')
+                    AND start_time <= NOW() AND end_time > NOW()), 0) AS active_now,
+                COALESCE(SUM(status IN ('PENDING', 'CONFIRMED') AND start_time > NOW()), 0) AS upcoming
+            FROM bookings`),
+
+        db.query(`
+            SELECT
+                COUNT(*) AS total,
+                COALESCE(SUM(s.is_active = TRUE AND l.is_active = TRUE), 0) AS active
+            FROM parking_slots s
+            JOIN parking_lots l ON l.lot_id = s.lot_id`),
+
+        db.query(`
+            SELECT
+                s.vehicle_type,
+                COUNT(*) AS total,
+                COALESCE(SUM(EXISTS (
+                    SELECT 1 FROM bookings b
+                    WHERE b.slot_id = s.slot_id AND ${ACTIVE_NOW}
+                )), 0) AS occupied
+            FROM parking_slots s
+            JOIN parking_lots l ON l.lot_id = s.lot_id
+            WHERE s.is_active = TRUE AND l.is_active = TRUE
+            GROUP BY s.vehicle_type
+            ORDER BY s.vehicle_type`),
+
+        db.query(`
+            SELECT
+                l.lot_id,
+                l.lot_name,
+                (SELECT COUNT(*) FROM parking_slots s
+                    WHERE s.lot_id = l.lot_id AND s.is_active = TRUE) AS total_slots,
+                (SELECT COUNT(DISTINCT b.slot_id) FROM bookings b
+                    WHERE b.lot_id = l.lot_id AND ${ACTIVE_NOW}) AS occupied,
+                (SELECT COUNT(*) FROM bookings b
+                    WHERE b.lot_id = l.lot_id AND b.status <> 'CANCELLED') AS bookings,
+                (SELECT COALESCE(SUM(b.amount), 0) FROM bookings b
+                    WHERE b.lot_id = l.lot_id AND b.status <> 'CANCELLED') AS revenue
+            FROM parking_lots l
+            WHERE l.is_active = TRUE
+            ORDER BY revenue DESC, l.lot_name ASC`),
+
+        db.query(`
+            SELECT
+                DATE_FORMAT(start_time, '%Y-%m-%d') AS day,
+                COUNT(*) AS bookings,
+                SUM(amount) AS revenue
+            FROM bookings
+            WHERE status <> 'CANCELLED'
+              AND start_time >= DATE_SUB(CURDATE(), INTERVAL 13 DAY)
+              AND start_time < DATE_ADD(CURDATE(), INTERVAL 1 DAY)
+            GROUP BY DATE_FORMAT(start_time, '%Y-%m-%d')`),
+
+        db.query(`
+            SELECT HOUR(start_time) AS hr, COUNT(*) AS total
+            FROM bookings
+            WHERE status <> 'CANCELLED'
+            GROUP BY HOUR(start_time)`),
+
+        db.query(`
+            SELECT status, COUNT(*) AS total
+            FROM (
+                SELECT CASE
+                    WHEN status IN ('PENDING', 'CONFIRMED') AND end_time <= NOW() THEN 'COMPLETED'
+                    ELSE status
+                END AS status
+                FROM bookings
+            ) t
+            GROUP BY status`),
+
+        db.query(`
+            SELECT
+                (SELECT COUNT(*) FROM users WHERE LOWER(username) <> ?) AS users,
+                (SELECT COUNT(*) FROM vehicles) AS vehicles`,
+            [ADMIN_USERNAME]),
+
+        db.query(`
+            SELECT
+                b.booking_id,
+                u.username,
+                l.lot_name,
+                s.floor_number,
+                s.slot_number,
+                v.vehicle_number,
+                b.start_time,
+                b.end_time,
+                b.amount,
+                CASE
+                    WHEN b.status IN ('PENDING', 'CONFIRMED') AND b.end_time <= NOW() THEN 'COMPLETED'
+                    ELSE b.status
+                END AS status
+            FROM bookings b
+            JOIN users u ON u.user_id = b.user_id
+            JOIN parking_lots l ON l.lot_id = b.lot_id
+            JOIN parking_slots s ON s.slot_id = b.slot_id
+            JOIN vehicles v ON v.vehicle_id = b.vehicle_id
+            ORDER BY b.created_at DESC, b.booking_id DESC
+            LIMIT 10`)
+    ]);
+
+    const dayMap = new Map(byDay.map(r => [r.day, r]));
+    const hourMap = new Map(byHour.map(r => [Number(r.hr), num(r.total)]));
+
+    const by_type = slotTypes.map(r => ({
+        vehicle_type: r.vehicle_type,
+        total: num(r.total),
+        occupied: num(r.occupied),
+        available: num(r.total) - num(r.occupied)
+    }));
+
+    const occupied = by_type.reduce((sum, r) => sum + r.occupied, 0);
+    const activeSlots = num(slotTotals.active);
+    const validBookings = num(book.valid);
+
+    res.json({
+        rate_per_hour: RATE_PER_HOUR,
+        revenue: {
+            total: num(money.total),
+            today: num(money.today),
+            month: num(money.month),
+            average_booking: validBookings ? num(money.total) / validBookings : 0,
+            collected: num(pay.collected),
+            pending: num(pay.pending),
+            refunded: num(pay.refunded)
+        },
+        bookings: {
+            total: num(book.total),
+            valid: validBookings,
+            cancelled: num(book.cancelled),
+            active_now: num(book.active_now),
+            upcoming: num(book.upcoming)
+        },
+        slots: {
+            total: num(slotTotals.total),
+            active: activeSlots,
+            inactive: num(slotTotals.total) - activeSlots,
+            occupied,
+            available: Math.max(activeSlots - occupied, 0),
+            by_type
+        },
+        people: {
+            users: num(people.users),
+            vehicles: num(people.vehicles)
+        },
+        by_lot: byLot.map(r => ({
+            lot_id: r.lot_id,
+            lot_name: r.lot_name,
+            total_slots: num(r.total_slots),
+            occupied: num(r.occupied),
+            available: Math.max(num(r.total_slots) - num(r.occupied), 0),
+            bookings: num(r.bookings),
+            revenue: num(r.revenue)
+        })),
+        revenue_by_day: lastNDays(today.today, 14).map(day => ({
+            day,
+            revenue: num(dayMap.get(day)?.revenue),
+            bookings: num(dayMap.get(day)?.bookings)
+        })),
+        bookings_by_hour: Array.from({ length: 24 }, (_, hour) => ({
+            hour,
+            bookings: hourMap.get(hour) || 0
+        })),
+        status_breakdown: byStatus.map(r => ({ status: r.status, total: num(r.total) })),
+        recent_bookings: recent.map(r => ({
+            booking_id: r.booking_id,
+            username: r.username,
+            lot_name: r.lot_name,
+            floor_number: r.floor_number,
+            slot_number: r.slot_number,
+            vehicle_number: r.vehicle_number,
+            start_time: r.start_time,
+            end_time: r.end_time,
+            amount: num(r.amount),
+            status: r.status
+        }))
+    });
 }));
 
 // ----------------------------------
