@@ -11,6 +11,156 @@
     href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap"
     rel="stylesheet">
   <style>
+    /* Colour variables: default = green theme, html.admin-theme = same shades in blue */
+    :root {
+      --c1: #a8d7b8;
+      --c2: rgba(225, 231, 225, .8);
+      --c3: #e9ede8;
+      --c4: #b9e7c7;
+      --c5: #16834a;
+      --c6: #dff4e6;
+      --c7: #8ba495;
+      --c8: #b8d8c2;
+      --c9: rgba(28, 77, 44, .08);
+      --c10: #edf6ef;
+      --c11: #1b6b3d;
+      --c12: #7a8a7e;
+      --c13: #edf5ef;
+      --c14: #d6eadb;
+      --c15: #dce7dd;
+      --c16: #21472a12;
+      --c17: #147a42;
+      --c18: #e5f6e9;
+      --c19: #c9ecd3;
+      --c20: #b4dfc0;
+      --c21: #18864a;
+      --c22: #445149;
+      --c23: #e0e7e0;
+      --c24: #85bd96;
+      --c25: #eaf7ed;
+      --c26: #68766c;
+      --c27: #f7faf7;
+      --c28: #b6cbb9;
+      --c29: #5f6c63;
+      --c30: #f5f8f5;
+      --c31: #68746b;
+      --c32: #7b877e;
+      --c33: #c9e9d2;
+      --c34: #167844;
+      --c35: #183c2418;
+      --c36: #2c4936;
+      --c37: #17211c;
+      --c38: #7a857c;
+      --c39: #7ba988;
+      --c40: #e5ebe4;
+      --c41: #fafcf9;
+      --c42: #7b867d;
+      --c43: #26352b;
+      --c44: #e1e8e0;
+      --c45: #285239;
+      --c46: #183c2422;
+      --c47: #bdc6be;
+      --c48: #dfe6df;
+      --c49: #526055;
+      --c50: #f4f8f4;
+      --c51: #e1f4e6;
+      --c52: #197343;
+      --c53: #dbe4dc;
+      --c54: #89938b;
+      --c55: #23362a;
+      --c56: #e2e9e2;
+      --c57: #26382b;
+      --c58: #a9d2b4;
+      --c59: #f4faf5;
+      --c60: #f2f6f2;
+      --c61: #718075;
+      --c62: #193c2410;
+      --c63: #fbfdfb;
+      --c64: #e2f3e7;
+      --c65: #176b3b;
+      --c66: #59665d;
+      --c67: #8a948c
+    }
+
+    html.admin-theme {
+      --ink: #171a21;
+      --muted: #777b81;
+      --line: #e8eaec;
+      --canvas: #f4f6f7;
+      --green: #163d83;
+      --green-bg: #dfeaf4;
+      --shadow: 0 24px 80px rgba(27, 35, 44, .10);
+      --c1: #a8bfd7;
+      --c2: rgba(225, 227, 231, .8);
+      --c3: #e8ebed;
+      --c4: #b9d1e7;
+      --c5: #163d83;
+      --c6: #dfeaf4;
+      --c7: #8b96a4;
+      --c8: #b8c9d8;
+      --c9: rgba(28, 53, 77, .08);
+      --c10: #edf2f6;
+      --c11: #1b3c6b;
+      --c12: #7a808a;
+      --c13: #edf2f5;
+      --c14: #d6e2ea;
+      --c15: #dce2e7;
+      --c16: #21374712;
+      --c17: #143b7a;
+      --c18: #e5eff6;
+      --c19: #c9dcec;
+      --c20: #b4ccdf;
+      --c21: #184286;
+      --c22: #444951;
+      --c23: #e0e4e7;
+      --c24: #85a3bd;
+      --c25: #eaf2f7;
+      --c26: #686d76;
+      --c27: #f7f9fa;
+      --c28: #b6c2cb;
+      --c29: #5f646c;
+      --c30: #f5f7f8;
+      --c31: #686d74;
+      --c32: #7b8087;
+      --c33: #c9dbe9;
+      --c34: #163a78;
+      --c35: #182a3c18;
+      --c36: #2c3a49;
+      --c37: #171a21;
+      --c38: #7a7e85;
+      --c39: #7b94a9;
+      --c40: #e4e8eb;
+      --c41: #f9fbfc;
+      --c42: #7b7f86;
+      --c43: #262d35;
+      --c44: #e0e5e8;
+      --c45: #283a52;
+      --c46: #182a3c22;
+      --c47: #bdc0c6;
+      --c48: #dfe3e6;
+      --c49: #525760;
+      --c50: #f4f6f8;
+      --c51: #e1ecf4;
+      --c52: #193a73;
+      --c53: #dbe0e4;
+      --c54: #898d93;
+      --c55: #232c36;
+      --c56: #e2e6e9;
+      --c57: #263038;
+      --c58: #a9c0d2;
+      --c59: #f4f8fa;
+      --c60: #f2f4f6;
+      --c61: #717780;
+      --c62: #192b3c10;
+      --c63: #fbfcfd;
+      --c64: #e2ebf3;
+      --c65: #17396b;
+      --c66: #595e66;
+      --c67: #8a8e94
+    }
+  </style>
+
+  <style>
     :root {
       --ink: #17211c;
       --muted: #77817b;
@@ -57,7 +207,7 @@
     button:focus-visible,
     select:focus-visible,
     input:focus-visible {
-      outline: 3px solid #a8d7b8;
+      outline: 3px solid var(--c1);
       outline-offset: 3px
     }
 
@@ -68,7 +218,7 @@
       justify-content: space-between;
       padding: 0 clamp(20px, 5vw, 76px);
       background: rgba(255, 255, 255, .82);
-      border-bottom: 1px solid rgba(225, 231, 225, .8);
+      border-bottom: 1px solid var(--c2);
       position: relative;
       z-index: 5
     }
@@ -118,7 +268,7 @@
       width: min(100%, 980px);
       min-height: 570px;
       background: var(--paper);
-      border: 1px solid #e9ede8;
+      border: 1px solid var(--c3);
       border-radius: 32px;
       box-shadow: var(--shadow);
       overflow: hidden;
@@ -133,7 +283,7 @@
       left: 0;
       right: 0;
       height: 5px;
-      background: linear-gradient(90deg, #b9e7c7, #16834a 45%, #dff4e6)
+      background: linear-gradient(90deg, var(--c4), var(--c5) 45%, var(--c6))
     }
 
     .panel {
@@ -169,7 +319,7 @@
       content: "";
       height: 1px;
       width: 24px;
-      background: #8ba495
+      background: var(--c7)
     }
 
     h1,
@@ -251,8 +401,8 @@
 
     .action-card:hover {
       transform: translateY(-3px);
-      border-color: #b8d8c2;
-      box-shadow: 0 12px 28px rgba(28, 77, 44, .08)
+      border-color: var(--c8);
+      box-shadow: 0 12px 28px var(--c9)
     }
 
     .action-icon {
@@ -261,14 +411,14 @@
       border-radius: 15px;
       display: grid;
       place-items: center;
-      background: #edf6ef;
+      background: var(--c10);
       flex-shrink: 0
     }
 
     .action-icon svg {
       width: 22px;
       height: 22px;
-      stroke: #1b6b3d
+      stroke: var(--c11)
     }
 
     .action-text {
@@ -288,7 +438,7 @@
 
     .arrow {
       font-size: 20px;
-      color: #7a8a7e;
+      color: var(--c12);
       transition: transform .25s ease
     }
 
@@ -299,7 +449,7 @@
     .home-visual {
       min-height: 365px;
       border-radius: 25px;
-      background: #edf5ef;
+      background: var(--c13);
       position: relative;
       overflow: hidden;
       padding: 24px;
@@ -313,7 +463,7 @@
       width: 290px;
       height: 290px;
       border-radius: 50%;
-      background: #d6eadb;
+      background: var(--c14);
       filter: blur(1px)
     }
 
@@ -323,10 +473,10 @@
       max-width: 310px;
       aspect-ratio: 1/1.04;
       background: #fff;
-      border: 1px solid #dce7dd;
+      border: 1px solid var(--c15);
       border-radius: 22px;
       padding: 18px;
-      box-shadow: 0 18px 42px #21472a12;
+      box-shadow: 0 18px 42px var(--c16);
       transform: rotate(-3deg)
     }
 
@@ -343,8 +493,8 @@
       font-size: 9px;
       text-transform: uppercase;
       letter-spacing: .08em;
-      color: #147a42;
-      background: #e5f6e9;
+      color: var(--c17);
+      background: var(--c18);
       border-radius: 999px;
       padding: 6px 8px
     }
@@ -358,8 +508,8 @@
 
     .mini-slot {
       border-radius: 8px;
-      background: #c9ecd3;
-      border: 1px solid #b4dfc0;
+      background: var(--c19);
+      border: 1px solid var(--c20);
       position: relative
     }
 
@@ -370,7 +520,7 @@
       right: 20%;
       top: 18%;
       bottom: 18%;
-      border: 1.5px solid #18864a;
+      border: 1.5px solid var(--c21);
       border-radius: 4px
     }
 
@@ -422,7 +572,7 @@
     .field label {
       font-size: 12px;
       font-weight: 700;
-      color: #445149
+      color: var(--c22)
     }
 
     select,
@@ -430,7 +580,7 @@
     input[type="time"] {
       width: 100%;
       height: 51px;
-      border: 1px solid #e0e7e0;
+      border: 1px solid var(--c23);
       border-radius: 13px;
       background: #fff;
       color: var(--ink);
@@ -441,25 +591,25 @@
 
     select:focus,
     input:focus {
-      border-color: #85bd96;
-      box-shadow: 0 0 0 4px #eaf7ed
+      border-color: var(--c24);
+      box-shadow: 0 0 0 4px var(--c25)
     }
 
     .camera-button {
       height: 51px;
       width: 50px;
-      border: 1px solid #e0e7e0;
+      border: 1px solid var(--c23);
       border-radius: 13px;
       background: #fff;
       display: grid;
       place-items: center;
-      color: #68766c;
+      color: var(--c26);
       transition: background .2s, border-color .2s
     }
 
     .camera-button:hover {
-      background: #f7faf7;
-      border-color: #b6cbb9
+      background: var(--c27);
+      border-color: var(--c28)
     }
 
     .camera-button svg {
@@ -493,13 +643,13 @@
       border-radius: 999px;
       padding: 10px 15px;
       font-size: 12px;
-      color: #5f6c63;
+      color: var(--c29);
       white-space: nowrap;
       transition: background .2s
     }
 
     .back-button:hover {
-      background: #f5f8f5
+      background: var(--c30)
     }
 
     .location-line {
@@ -533,7 +683,7 @@
 
     .legend span {
       font-size: 11px;
-      color: #68746b;
+      color: var(--c31);
       display: flex;
       align-items: center;
       gap: 7px
@@ -562,7 +712,7 @@
       font-size: 10px;
       letter-spacing: .1em;
       text-transform: uppercase;
-      color: #7b877e;
+      color: var(--c32);
       font-weight: 700;
       margin: 23px 0 15px
     }
@@ -588,11 +738,11 @@
 
     .slot.available {
       background: var(--green-bg);
-      border-color: #c9e9d2
+      border-color: var(--c33)
     }
 
     .slot.available .slot-car {
-      stroke: #167844
+      stroke: var(--c34)
     }
 
     .slot.reserved {
@@ -617,7 +767,7 @@
 
     .slot:hover:not(:disabled) {
       transform: translateY(-4px);
-      box-shadow: 0 10px 18px #183c2418;
+      box-shadow: 0 10px 18px var(--c35);
       filter: saturate(1.05);
       z-index: 2
     }
@@ -641,7 +791,7 @@
       font-size: 9px;
       font-weight: 700;
       letter-spacing: .02em;
-      color: #2c4936;
+      color: var(--c36);
       opacity: 0;
       transform: translateY(3px);
       transition: opacity .18s, transform .18s
@@ -659,7 +809,7 @@
       left: 50%;
       transform: translate(-50%, 4px);
       white-space: nowrap;
-      background: #17211c;
+      background: var(--c37);
       color: white;
       padding: 7px 10px;
       border-radius: 7px;
@@ -681,14 +831,14 @@
       top: 100%;
       left: 50%;
       border: 5px solid transparent;
-      border-top-color: #17211c;
+      border-top-color: var(--c37);
       transform: translateX(-50%)
     }
 
     .slot-note {
       margin-top: 18px;
       font-size: 11px;
-      color: #7a857c;
+      color: var(--c38);
       display: flex;
       align-items: center;
       gap: 8px
@@ -699,14 +849,14 @@
       width: 6px;
       height: 6px;
       border-radius: 50%;
-      background: #7ba988
+      background: var(--c39)
     }
 
     .booking-summary {
       margin-top: 34px;
-      border: 1px solid #e5ebe4;
+      border: 1px solid var(--c40);
       border-radius: 21px;
-      background: #fafcf9;
+      background: var(--c41);
       padding: 24px;
       display: grid;
       grid-template-columns: 1fr auto;
@@ -719,7 +869,7 @@
       font-size: 10px;
       letter-spacing: .13em;
       text-transform: uppercase;
-      color: #7b867d;
+      color: var(--c42);
       font-weight: 700;
       margin-bottom: 13px
     }
@@ -740,18 +890,18 @@
 
     .meta-item {
       font-size: 11px;
-      color: #7a857c
+      color: var(--c38)
     }
 
     .meta-item strong {
       display: block;
       font-size: 13px;
-      color: #26352b;
+      color: var(--c43);
       margin-top: 5px
     }
 
     .price-block {
-      border-left: 1px solid #e1e8e0;
+      border-left: 1px solid var(--c44);
       padding-left: 30px;
       min-width: 155px
     }
@@ -773,13 +923,13 @@
     .price small {
       font-size: 12px;
       letter-spacing: 0;
-      color: #7a857c;
+      color: var(--c38);
       font-weight: 600
     }
 
     .price-note {
       font-size: 10px;
-      color: #7a857c;
+      color: var(--c38);
       margin-top: 8px
     }
 
@@ -807,29 +957,29 @@
     }
 
     .primary-button:hover {
-      background: #285239;
+      background: var(--c45);
       transform: translateY(-2px);
-      box-shadow: 0 8px 20px #183c2422
+      box-shadow: 0 8px 20px var(--c46)
     }
 
     .primary-button:disabled {
-      background: #bdc6be;
+      background: var(--c47);
       cursor: not-allowed;
       transform: none;
       box-shadow: none
     }
 
     .secondary-button {
-      border: 1px solid #dfe6df;
+      border: 1px solid var(--c48);
       background: white;
       border-radius: 999px;
       padding: 14px 19px;
       font-size: 12px;
-      color: #526055
+      color: var(--c49)
     }
 
     .secondary-button:hover {
-      background: #f4f8f4
+      background: var(--c50)
     }
 
     .hidden {
@@ -870,14 +1020,14 @@
       text-transform: uppercase;
       border-radius: 999px;
       padding: 8px 10px;
-      background: #e1f4e6;
-      color: #197343;
+      background: var(--c51);
+      color: var(--c52);
       font-weight: 700
     }
 
     .empty-state {
       text-align: center;
-      border: 1px dashed #dbe4dc;
+      border: 1px dashed var(--c53);
       border-radius: 18px;
       padding: 36px 20px;
       color: var(--muted);
@@ -889,7 +1039,7 @@
       bottom: 24px;
       left: 50%;
       transform: translate(-50%, 20px);
-      background: #17211c;
+      background: var(--c37);
       color: #fff;
       border-radius: 999px;
       padding: 13px 20px;
@@ -911,7 +1061,7 @@
       justify-content: space-between;
       gap: 15px;
       padding: 0 clamp(22px, 5vw, 76px) 24px;
-      color: #89938b;
+      color: var(--c54);
       font-size: 10px;
       letter-spacing: .04em
     }
@@ -957,7 +1107,7 @@
 
       .price-block {
         border-left: 0;
-        border-top: 1px solid #e1e8e0;
+        border-top: 1px solid var(--c44);
         padding: 18px 0 0;
         min-width: unset
       }
@@ -1077,7 +1227,7 @@
       top: 0;
       width: 25px;
       height: 25px;
-      border: 1px solid #23362a;
+      border: 1px solid var(--c55);
       border-radius: 50%;
       pointer-events: none;
       z-index: 100;
@@ -1114,11 +1264,11 @@
       display: flex;
       align-items: center;
       gap: 8px;
-      border: 1px solid #e2e9e2;
+      border: 1px solid var(--c56);
       background: #fff;
       border-radius: 999px;
       padding: 9px 13px;
-      color: #26382b;
+      color: var(--c57);
       font-size: 12px;
       font-weight: 700;
       transition: .2s
@@ -1126,8 +1276,8 @@
 
     .account-button:hover,
     .account-button.signed-in {
-      border-color: #a9d2b4;
-      background: #f4faf5
+      border-color: var(--c58);
+      background: var(--c59)
     }
 
     .account-button svg {
@@ -1143,7 +1293,7 @@
     .auth-tabs {
       display: flex;
       gap: 8px;
-      background: #f2f6f2;
+      background: var(--c60);
       padding: 5px;
       border-radius: 14px;
       margin: 24px 0
@@ -1155,7 +1305,7 @@
       background: transparent;
       padding: 12px;
       border-radius: 10px;
-      color: #718075;
+      color: var(--c61);
       font-weight: 700;
       font-size: 13px
     }
@@ -1163,7 +1313,7 @@
     .auth-tab.active {
       background: #fff;
       color: var(--ink);
-      box-shadow: 0 3px 12px #193c2410
+      box-shadow: 0 3px 12px var(--c62)
     }
 
     .stack-form {
@@ -1175,7 +1325,7 @@
     .stack-form input {
       width: 100%;
       height: 51px;
-      border: 1px solid #e0e7e0;
+      border: 1px solid var(--c23);
       border-radius: 13px;
       background: #fff;
       color: var(--ink);
@@ -1184,8 +1334,8 @@
     }
 
     .stack-form input:focus {
-      border-color: #85bd96;
-      box-shadow: 0 0 0 4px #eaf7ed
+      border-color: var(--c24);
+      box-shadow: 0 0 0 4px var(--c25)
     }
 
     .full-button {
@@ -1195,7 +1345,7 @@
 
     .form-hint {
       font-size: 11px;
-      color: #89938b;
+      color: var(--c54);
       line-height: 1.6;
       margin: 0
     }
@@ -1214,15 +1364,15 @@
       padding: 20px;
       border: 1px solid var(--line);
       border-radius: 18px;
-      background: #fbfdfb
+      background: var(--c63)
     }
 
     .avatar {
       width: 48px;
       height: 48px;
       border-radius: 16px;
-      background: #e2f3e7;
-      color: #176b3b;
+      background: var(--c64);
+      color: var(--c65);
       display: grid;
       place-items: center;
       font: 800 20px Manrope
@@ -1307,9 +1457,9 @@
       height: 42px;
       display: grid;
       place-items: center;
-      background: #edf6ef;
+      background: var(--c10);
       border-radius: 13px;
-      color: #176b3b;
+      color: var(--c65);
       font-size: 21px
     }
 
@@ -1331,13 +1481,13 @@
 
     .vehicle-info span {
       font-size: 12px;
-      color: #59665d;
+      color: var(--c66);
       margin-top: 4px
     }
 
     .vehicle-info small {
       font-size: 10px;
-      color: #8a948c;
+      color: var(--c67);
       margin-top: 3px
     }
 
@@ -1380,7 +1530,7 @@
 
     .muted-inline {
       font-weight: 400;
-      color: #7b867d
+      color: var(--c42)
     }
 
     @media(max-width:800px) {
@@ -1458,6 +1608,311 @@
 
       .booking-controls .field:first-child {
         grid-column: auto
+      }
+    }
+  </style>
+
+  <style>
+    /* ---- Parking rows: centred, even when a floor has fewer than 10 spaces ---- */
+    .floor-row {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 13px
+    }
+
+    .floor-row .slot {
+      flex: 0 0 calc((100% - 9 * 13px) / 10);
+      min-width: 0
+    }
+
+    .floor-tag {
+      text-align: center
+    }
+
+    @media(max-width:800px) {
+      .floor-row {
+        gap: 10px
+      }
+
+      .floor-row .slot {
+        flex-basis: calc((100% - 4 * 10px) / 5)
+      }
+    }
+
+    @media(max-width:480px) {
+      .floor-row {
+        gap: 9px
+      }
+
+      .floor-row .slot {
+        flex-basis: calc((100% - 3 * 9px) / 4)
+      }
+    }
+
+    /* ---- Booking / reservation forms with a date field ---- */
+    .booking-controls.cols-6 {
+      grid-template-columns: repeat(3, minmax(0, 1fr))
+    }
+
+    .booking-controls.cols-4 {
+      grid-template-columns: repeat(4, minmax(0, 1fr))
+    }
+
+    .booking-controls input[type="date"],
+    .booking-controls input[type="time"] {
+      min-width: 0;
+      width: 100%
+    }
+
+    @media(max-width:800px) {
+
+      .booking-controls.cols-6,
+      .booking-controls.cols-4 {
+        grid-template-columns: 1fr 1fr
+      }
+    }
+
+    @media(max-width:520px) {
+
+      .booking-controls.cols-6,
+      .booking-controls.cols-4 {
+        grid-template-columns: 1fr
+      }
+    }
+
+    /* ---- Admin analytics ---- */
+    .an-head-actions {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      flex-wrap: wrap
+    }
+
+    .an-updated {
+      margin-top: 22px;
+      font-size: 12px;
+      color: var(--muted)
+    }
+
+    .an-title {
+      margin: 34px 0 0;
+      font-size: 13px;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--muted)
+    }
+
+    .an-stats {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 14px;
+      margin-top: 14px
+    }
+
+    .an-stat {
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 18px;
+      background: var(--paper);
+      min-width: 0
+    }
+
+    .an-stat.accent {
+      background: var(--green-bg)
+    }
+
+    .an-stat span {
+      display: block;
+      font-size: 11px;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: var(--muted);
+      font-weight: 700
+    }
+
+    .an-stat strong {
+      display: block;
+      margin-top: 8px;
+      font-size: 24px;
+      color: var(--ink);
+      overflow-wrap: anywhere
+    }
+
+    .an-stat small {
+      display: block;
+      margin-top: 4px;
+      font-size: 12px;
+      color: var(--muted)
+    }
+
+    .an-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+      margin-top: 22px
+    }
+
+    .an-card {
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 20px;
+      background: var(--paper);
+      min-width: 0
+    }
+
+    .an-card.an-wide {
+      grid-column: 1 / -1
+    }
+
+    .an-card h4 {
+      margin: 0 0 14px;
+      font-size: 14px;
+      color: var(--ink)
+    }
+
+    .chart-svg {
+      width: 100%;
+      height: auto;
+      display: block
+    }
+
+    .chart-grid {
+      stroke: var(--line);
+      stroke-width: 1
+    }
+
+    .chart-text {
+      fill: var(--muted);
+      font-size: 10px
+    }
+
+    .chart-bar {
+      fill: var(--green)
+    }
+
+    .chart-bar:hover {
+      opacity: .8
+    }
+
+    .donut-row {
+      display: flex;
+      align-items: center;
+      gap: 22px;
+      margin-bottom: 16px
+    }
+
+    .donut {
+      width: 130px;
+      height: 130px;
+      flex: 0 0 auto
+    }
+
+    .donut-bg {
+      stroke: var(--green-bg)
+    }
+
+    .donut-fg {
+      stroke: var(--green)
+    }
+
+    .donut-text {
+      fill: var(--ink);
+      font-size: 24px;
+      font-weight: 700
+    }
+
+    .donut-legend {
+      display: grid;
+      gap: 6px;
+      font-size: 13px;
+      color: var(--muted)
+    }
+
+    .donut-legend strong {
+      color: var(--ink);
+      font-size: 16px
+    }
+
+    .hbars {
+      display: grid;
+      gap: 11px
+    }
+
+    .hbar {
+      display: grid;
+      grid-template-columns: minmax(70px, 120px) 1fr auto;
+      gap: 10px;
+      align-items: center;
+      font-size: 13px
+    }
+
+    .hbar-label {
+      color: var(--ink);
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap
+    }
+
+    .hbar-track {
+      height: 10px;
+      border-radius: 99px;
+      background: var(--green-bg);
+      overflow: hidden
+    }
+
+    .hbar-fill {
+      height: 100%;
+      border-radius: 99px;
+      background: var(--green)
+    }
+
+    .hbar-value {
+      color: var(--muted);
+      font-size: 12px;
+      white-space: nowrap
+    }
+
+    .an-table-wrap {
+      margin-top: 14px;
+      overflow-x: auto;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      background: var(--paper)
+    }
+
+    .an-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px
+    }
+
+    .an-table th,
+    .an-table td {
+      padding: 12px 14px;
+      text-align: left;
+      white-space: nowrap;
+      border-bottom: 1px solid var(--line)
+    }
+
+    .an-table th {
+      font-size: 11px;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: var(--muted)
+    }
+
+    .an-table tr:last-child td {
+      border-bottom: 0
+    }
+
+    @media(max-width:800px) {
+      .an-stats {
+        grid-template-columns: repeat(2, minmax(0, 1fr))
+      }
+
+      .an-grid {
+        grid-template-columns: 1fr
       }
     }
   </style>
@@ -1677,7 +2132,7 @@
         <div>
           <div class="eyebrow">Reservation / 01</div>
           <h2>Choose your spot.</h2>
-          <p class="lead">Select your vehicle, location, floor and parking time.</p>
+          <p class="lead">Select your vehicle, location, floor, date and parking time.</p>
         </div>
         <button class="back-button" data-action="home">← Back home</button>
       </div>
@@ -1685,7 +2140,7 @@
         yet.<br><strong>Add a vehicle from your Profile</strong> before booking a parking spot.<br><button
           class="secondary-button" data-action="profile" style="margin-top:16px">Go to profile</button></div>
       <div id="bookingControls">
-        <div class="controls booking-controls">
+        <div class="controls booking-controls cols-6">
           <div class="field"><label for="bookingVehicle">Your vehicle</label><select id="bookingVehicle"></select></div>
           <div class="field"><label for="location">Parking location</label><select id="location"></select></div>
           <div class="field"><label for="floor">Floor</label><select id="floor">
@@ -1693,8 +2148,9 @@
               <option value="1">Level 01</option>
               <option value="2">Level 02</option>
             </select></div>
-          <div class="field"><label for="fromTime">From</label><input id="fromTime" type="time" value="10:00"></div>
-          <div class="field"><label for="toTime">To</label><input id="toTime" type="time" value="12:00"></div>
+          <div class="field"><label for="bookDate">Date</label><input id="bookDate" type="date"></div>
+          <div class="field"><label for="fromTime">From</label><input id="fromTime" type="time"></div>
+          <div class="field"><label for="toTime">To</label><input id="toTime" type="time"></div>
         </div>
         <div class="location-line" style="margin-top:34px">
           <div>
@@ -1721,13 +2177,14 @@
         </div>
         <button class="back-button" data-action="home">← Back home</button>
       </div>
-      <div class="controls booking-controls">
+      <div class="controls booking-controls cols-4">
         <div class="field"><label for="viewLocation">Parking location</label><select id="viewLocation"></select></div>
         <div class="field"><label for="viewFloor">Floor</label><select id="viewFloor">
             <option value="0">Ground floor · G</option>
             <option value="1">Level 01</option>
             <option value="2">Level 02</option>
           </select></div>
+        <div class="field"><label for="viewDate">Date</label><input id="viewDate" type="date"></div>
         <div class="field"><label for="viewTime">View time</label><input id="viewTime" type="time"></div>
       </div>
       <div class="location-line" style="margin-top:30px">
@@ -1751,6 +2208,23 @@
   </template>
 
 
+  <template id="analytics-template">
+    <div class="panel">
+      <div class="section-heading">
+        <div>
+          <div class="eyebrow">Admin / Analytics</div>
+          <h2>Parking analytics.</h2>
+          <p class="lead">Revenue, bookings and parking-space numbers, read live from the database.</p>
+        </div>
+        <div class="an-head-actions">
+          <button class="secondary-button" id="analyticsRefresh" type="button">Refresh</button>
+          <button class="back-button" data-action="home">← Back home</button>
+        </div>
+      </div>
+      <div id="analyticsBody"></div>
+    </div>
+  </template>
+
   <script>
     // Parking locations and slots are loaded from MySQL.
     let locations = [];
@@ -1771,7 +2245,9 @@
 
     const $ = id => document.getElementById(id);
 
-    const API_BASE = "http://localhost:3000/api";
+    // Same-origin when served by the Parkline server (e.g. on Railway);
+    // falls back to localhost if the file is opened directly.
+    const API_BASE = location.protocol === "file:" ? "http://localhost:3000/api" : "/api";
 
     // Only the login token is kept in the browser.
     // Users, vehicles and bookings all live in MySQL.
@@ -1805,8 +2281,9 @@
       lot: "",
       lotId: null,
       floor: 0,
-      from: "10:00",
-      to: "12:00",
+      date: localDateString(),
+      from: nowTime(),
+      to: addMinutesToTime(nowTime(), 60).time,
       spot: null,
       spotId: null,
       authMode: "login"
@@ -1962,15 +2439,44 @@
       return state.user ? state.bookings : [];
     }
 
+    function isAdmin() {
+      return Boolean(state.user && state.user.is_admin);
+    }
+
     function updateAccountButton() {
       $("accountButtonLabel").textContent = state.user ? state.user.username : "Account";
       $("accountButton").classList.toggle("signed-in", !!state.user);
+
+      // Admins see the same interface in blue instead of green.
+      document.documentElement.classList.toggle("admin-theme", isAdmin());
+    }
+
+    // Admin home screen: "Book a parking spot" becomes "Show analytics".
+    function setupHome() {
+      if (!isAdmin()) return;
+
+      const card = screen.querySelector('[data-action="book"]');
+
+      if (!card) return;
+
+      card.dataset.action = "analytics";
+
+      card.querySelector(".action-icon").innerHTML =
+        '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg>';
+
+      card.querySelector(".action-text").innerHTML =
+        "<strong>Show analytics</strong><span>Revenue, bookings and parking-space numbers</span>";
     }
 
     function loadScreen(name) {
       // These screens need a logged-in user.
-      if (["profile", "vehicle", "booking"].includes(name) && !state.user) {
+      if (["profile", "vehicle", "booking", "analytics"].includes(name) && !state.user) {
         name = "auth";
+      }
+
+      // Analytics is for the admin only (the server enforces this as well).
+      if (name === "analytics" && !isAdmin()) {
+        name = "home";
       }
 
       state.screen = name;
@@ -1980,6 +2486,8 @@
       screen.innerHTML = "";
       screen.appendChild(template.content.cloneNode(true));
 
+      if (name === "home") setupHome();
+      if (name === "analytics") setupAnalytics();
       if (name === "auth") setupAuth();
       if (name === "profile") renderProfile();
       if (name === "vehicle") setupVehicleForm();
@@ -2007,10 +2515,14 @@
       return h * 60 + m;
     }
 
+    // Duration between the From and To times. If To is earlier than From,
+    // the booking ends the next day (e.g. 22:00 to 02:00 = 4 hours).
     function durationHours() {
       if (!state.from || !state.to) return 0;
 
-      const mins = timeMinutes(state.to) - timeMinutes(state.from);
+      let mins = timeMinutes(state.to) - timeMinutes(state.from);
+
+      if (mins < 0) mins += 1440;
 
       return mins > 0 ? mins / 60 : 0;
     }
@@ -2037,12 +2549,48 @@
       return `${year}-${month}-${day}`;
     }
 
-    function makeDateTime(time, dayOffset = 0) {
-      const date = new Date();
+    function addDays(dateString, days) {
+      const [y, m, d] = dateString.split("-").map(Number);
 
-      date.setDate(date.getDate() + dayOffset);
+      return localDateString(new Date(y, m - 1, d + days));
+    }
 
-      return `${localDateString(date)} ${time}:00`;
+    function makeDateTime(time, dayOffset = 0, baseDate = localDateString()) {
+      return `${addDays(baseDate, dayOffset)} ${time}:00`;
+    }
+
+    function nowTime() {
+      const now = new Date();
+
+      return String(now.getHours()).padStart(2, "0") + ":" +
+        String(now.getMinutes()).padStart(2, "0");
+    }
+
+    function dateLabel(dateString) {
+      const [y, m, d] = dateString.split("-").map(Number);
+
+      return new Date(y, m - 1, d).toLocaleDateString("en-IN", {
+        day: "2-digit",
+        month: "short",
+        year: "numeric"
+      });
+    }
+
+    function startDateTime() {
+      return makeDateTime(state.from, 0, state.date);
+    }
+
+    function endDateTime() {
+      const nextDay = timeMinutes(state.to) < timeMinutes(state.from) ? 1 : 0;
+
+      return makeDateTime(state.to, nextDay, state.date);
+    }
+
+    // True if the chosen start is more than 5 minutes in the past.
+    function startIsPast() {
+      const start = new Date(startDateTime().replace(" ", "T"));
+
+      return start.getTime() < Date.now() - 5 * 60000;
     }
 
     function addMinutesToTime(time, minutes) {
@@ -2069,7 +2617,7 @@
 
       try {
         const response = await fetch(
-          "http://localhost:3000/api/parking-lots"
+          API_BASE + "/parking-lots"
         );
 
         if (!response.ok) {
@@ -2141,7 +2689,7 @@
       if (vehicleType) params.set("vehicle_type", vehicleType);
 
       const response = await fetch(
-        `http://localhost:3000/api/parking-slots?${params.toString()}`
+        `${API_BASE}/parking-slots?${params.toString()}`
       );
 
       if (!response.ok) {
@@ -2405,6 +2953,11 @@
       state.spot = null;
       state.spotId = null;
 
+      // Start from the current time and default to a one-hour booking.
+      state.date = localDateString();
+      state.from = nowTime();
+      state.to = addMinutesToTime(state.from, 60).time;
+
       $("bookingControls").classList.add("hidden");
       $("noVehiclesNotice").classList.add("hidden");
 
@@ -2434,6 +2987,9 @@
       if (!locationsLoaded || state.screen !== "booking") return;
 
       $("floor").value = String(state.floor);
+      $("bookDate").min = localDateString();
+      $("bookDate").max = addDays(localDateString(), 90);
+      $("bookDate").value = state.date;
       $("fromTime").value = state.from;
       $("toTime").value = state.to;
 
@@ -2455,6 +3011,21 @@
 
       $("floor").addEventListener("change", () => {
         state.floor = Number($("floor").value);
+        state.spot = null;
+
+        hideSummary();
+        renderSlots();
+      });
+
+      $("bookDate").addEventListener("change", () => {
+        const min = localDateString();
+        const max = addDays(min, 90);
+
+        // Keep the date inside the allowed range.
+        if (!$("bookDate").value || $("bookDate").value < min) $("bookDate").value = min;
+        if ($("bookDate").value > max) $("bookDate").value = max;
+
+        state.date = $("bookDate").value;
         state.spot = null;
 
         hideSummary();
@@ -2511,16 +3082,23 @@
       root.innerHTML =
         '<div class="empty-state">Loading parking spaces...</div>';
 
-      if (durationHours() <= 0) {
+      if (!state.date || durationHours() <= 0) {
         root.innerHTML =
-          '<div class="empty-state">Please choose a valid start and end time.</div>';
+          '<div class="empty-state">Please choose a valid date, start time and end time.</div>';
+
+        return;
+      }
+
+      if (startIsPast()) {
+        root.innerHTML =
+          '<div class="empty-state">That start time has already passed. Choose a later time or another date.</div>';
 
         return;
       }
 
       try {
-        const startTime = makeDateTime(state.from);
-        const endTime = makeDateTime(state.to);
+        const startTime = startDateTime();
+        const endTime = endDateTime();
 
         const selectedVehicle = currentVehicles().find(
           v => v.id === $("bookingVehicle").value
@@ -2673,7 +3251,7 @@
             </div>
 
             <div class="meta-item">
-              TIME<strong>${state.from} – ${state.to}</strong>
+              TIME<strong>${escapeHtml(dateLabel(state.date))} · ${state.from} – ${state.to}${endDateTime().slice(0, 10) !== state.date ? " (+1 day)" : ""}</strong>
             </div>
           </div>
         </div>
@@ -2682,7 +3260,7 @@
           <div class="price-caption">Estimated total</div>
           <div class="price">₹${price.toLocaleString("en-IN")}</div>
           <div class="price-note">
-            ₹${state.ratePerHour} per hour · ${hours > 0 ? hours + " hour(s)" : "Choose a valid time"}
+            ₹${state.ratePerHour} per hour · ${hours > 0 ? Math.round(hours * 100) / 100 + " hour(s)" : "Choose a valid time"}
           </div>
         </div>
 
@@ -2716,8 +3294,13 @@
         return;
       }
 
-      if (!state.spot || !state.spotId || durationHours() <= 0) {
-        showToast("Please select a spot and a valid time range.");
+      if (!state.spot || !state.spotId || !state.date || durationHours() <= 0) {
+        showToast("Please select a spot and a valid date and time range.");
+        return;
+      }
+
+      if (startIsPast()) {
+        showToast("That start time has already passed. Please update the time.");
         return;
       }
 
@@ -2740,8 +3323,8 @@
           body: {
             vehicle_id: Number(vehicle.id),
             slot_id: state.spotId,
-            start_time: makeDateTime(state.from),
-            end_time: makeDateTime(state.to)
+            start_time: startDateTime(),
+            end_time: endDateTime()
           }
         });
 
@@ -2782,6 +3365,10 @@
 
       const now = new Date();
 
+      $("viewDate").min = localDateString(now);
+      $("viewDate").max = addDays(localDateString(now), 90);
+      $("viewDate").value = localDateString(now);
+
       $("viewTime").value =
         String(now.getHours()).padStart(2, "0") + ":" +
         String(now.getMinutes()).padStart(2, "0");
@@ -2801,13 +3388,15 @@
 
         $("viewLotSubtitle").textContent =
           floorName(state.floor) +
-          " · Availability at " +
+          " · Availability on " +
+          dateLabel($("viewDate").value || localDateString()) +
+          " at " +
           $("viewTime").value;
 
         await renderViewSlots();
       };
 
-      ["viewLocation", "viewFloor", "viewTime"].forEach(id => {
+      ["viewLocation", "viewFloor", "viewDate", "viewTime"].forEach(id => {
         $(id).addEventListener("change", refresh);
       });
 
@@ -2859,12 +3448,13 @@
         '<div class="empty-state">Loading parking spaces...</div>';
 
       const floor = Number($("viewFloor").value);
-      const time = $("viewTime").value || "10:00";
+      const time = $("viewTime").value || nowTime();
+      const date = $("viewDate").value || localDateString();
 
       const end = addMinutesToTime(time, 60);
 
-      const startTime = makeDateTime(time);
-      const endTime = makeDateTime(end.time, end.dayOffset);
+      const startTime = makeDateTime(time, 0, date);
+      const endTime = makeDateTime(end.time, end.dayOffset, date);
 
       try {
         const slots = await fetchParkingSlots(
@@ -2943,6 +3533,272 @@
     }
 
     // ----------------------------------
+    // ADMIN ANALYTICS
+    // ----------------------------------
+
+    const fmtMoney = n =>
+      "₹" + Number(n || 0).toLocaleString("en-IN", {
+        minimumFractionDigits: 0,
+        maximumFractionDigits: 2
+      });
+
+    const fmtInt = n => Number(n || 0).toLocaleString("en-IN");
+
+    function compactNumber(n) {
+      if (n >= 100000) return (n / 100000).toFixed(1).replace(/\.0$/, "") + "L";
+      if (n >= 1000) return (n / 1000).toFixed(1).replace(/\.0$/, "") + "k";
+
+      return String(Math.round(n * 10) / 10);
+    }
+
+    function niceMax(v) {
+      if (v <= 0) return 1;
+
+      const exp = Math.pow(10, Math.floor(Math.log10(v)));
+      const f = v / exp;
+
+      return (f <= 1 ? 1 : f <= 2 ? 2 : f <= 5 ? 5 : 10) * exp;
+    }
+
+    // Vertical bar chart drawn as SVG (no external libraries).
+    function barChartSvg(items, format, labelEvery = 1) {
+      const W = 600, H = 230, padL = 46, padR = 8, padT = 14, padB = 30;
+      const innerW = W - padL - padR;
+      const innerH = H - padT - padB;
+
+      const top = niceMax(Math.max(0, ...items.map(i => i.value)));
+      const slot = innerW / items.length;
+      const barW = Math.max(slot * 0.62, 3);
+
+      let svg = `<svg class="chart-svg" viewBox="0 0 ${W} ${H}" role="img">`;
+
+      for (let i = 0; i <= 4; i++) {
+        const y = padT + innerH - (innerH * i) / 4;
+
+        svg += `<line class="chart-grid" x1="${padL}" x2="${W - padR}" y1="${y}" y2="${y}"/>`;
+        svg += `<text class="chart-text" x="${padL - 6}" y="${y + 3}" text-anchor="end">${compactNumber((top * i) / 4)}</text>`;
+      }
+
+      items.forEach((item, i) => {
+        const h = (item.value / top) * innerH;
+        const x = padL + i * slot + (slot - barW) / 2;
+        const y = padT + innerH - h;
+
+        svg += `<rect class="chart-bar" x="${x}" y="${y}" width="${barW}" height="${Math.max(h, item.value > 0 ? 1 : 0)}" rx="3"><title>${escapeHtml(item.label)}: ${escapeHtml(format(item.value))}</title></rect>`;
+
+        if (i % labelEvery === 0) {
+          svg += `<text class="chart-text" x="${x + barW / 2}" y="${H - 10}" text-anchor="middle">${escapeHtml(item.label)}</text>`;
+        }
+      });
+
+      return svg + "</svg>";
+    }
+
+    // Percentage ring for overall occupancy.
+    function donutSvg(value, total) {
+      const r = 52;
+      const c = 2 * Math.PI * r;
+      const pct = total > 0 ? Math.min(value / total, 1) : 0;
+
+      return `<svg class="donut" viewBox="0 0 140 140" role="img">
+        <circle class="donut-bg" cx="70" cy="70" r="${r}" fill="none" stroke-width="16"/>
+        <circle class="donut-fg" cx="70" cy="70" r="${r}" fill="none" stroke-width="16" stroke-linecap="round"
+          stroke-dasharray="${c * pct} ${c}" transform="rotate(-90 70 70)"/>
+        <text class="donut-text" x="70" y="70" text-anchor="middle" dominant-baseline="central">${Math.round(pct * 100)}%</text>
+      </svg>`;
+    }
+
+    // Horizontal bars. `total` (optional) makes each bar a share of its own total.
+    function hBars(items, max) {
+      if (!items.length) return '<div class="empty-state">No data yet.</div>';
+
+      const scale = max || Math.max(1, ...items.map(i => i.value));
+
+      return items.map(i => {
+        const base = i.total !== undefined ? (i.total || 1) : scale;
+        const pct = Math.min(100, (i.value / base) * 100);
+
+        return `<div class="hbar">
+          <div class="hbar-label">${escapeHtml(i.label)}</div>
+          <div class="hbar-track"><div class="hbar-fill" style="width:${pct}%"></div></div>
+          <div class="hbar-value">${escapeHtml(i.text)}</div>
+        </div>`;
+      }).join("");
+    }
+
+    function statCard(label, value, note, accent) {
+      return `<div class="an-stat${accent ? " accent" : ""}">
+        <span>${escapeHtml(label)}</span>
+        <strong>${escapeHtml(value)}</strong>
+        ${note ? `<small>${escapeHtml(note)}</small>` : ""}
+      </div>`;
+    }
+
+    function renderAnalytics(d) {
+      const rev = d.revenue, bk = d.bookings, sl = d.slots;
+
+      const dayItems = d.revenue_by_day.map(r => {
+        const [y, m, day] = r.day.split("-").map(Number);
+
+        return {
+          label: new Date(y, m - 1, day).toLocaleDateString("en-IN", { day: "2-digit", month: "short" }),
+          value: r.revenue
+        };
+      });
+
+      const hourItems = d.bookings_by_hour.map(r => ({
+        label: String(r.hour).padStart(2, "0"),
+        value: r.bookings
+      }));
+
+      const typeBars = sl.by_type.map(r => ({
+        label: typeLabel(r.vehicle_type),
+        value: r.occupied,
+        total: r.total,
+        text: `${r.occupied} / ${r.total} in use`
+      }));
+
+      const lotBars = d.by_lot.map(r => ({
+        label: r.lot_name,
+        value: r.revenue,
+        text: fmtMoney(r.revenue)
+      }));
+
+      const statusBars = d.status_breakdown.map(r => ({
+        label: statusLabel(r.status),
+        value: r.total,
+        text: fmtInt(r.total)
+      }));
+
+      const lotRows = d.by_lot.map(r => `
+        <tr>
+          <td>${escapeHtml(r.lot_name)}</td>
+          <td>${fmtInt(r.total_slots)}</td>
+          <td>${fmtInt(r.occupied)}</td>
+          <td>${fmtInt(r.available)}</td>
+          <td>${fmtInt(r.bookings)}</td>
+          <td>${fmtMoney(r.revenue)}</td>
+        </tr>`).join("");
+
+      const recentRows = d.recent_bookings.map(r => `
+        <tr>
+          <td>#${escapeHtml(r.booking_id)}</td>
+          <td>${escapeHtml(r.username)}</td>
+          <td>${escapeHtml(r.lot_name)}</td>
+          <td>${escapeHtml(floorName(r.floor_number))} · ${escapeHtml(r.slot_number)}</td>
+          <td>${escapeHtml(r.vehicle_number)}</td>
+          <td>${escapeHtml(String(r.start_time).slice(0, 16))}</td>
+          <td>${fmtMoney(r.amount)}</td>
+          <td>${escapeHtml(statusLabel(r.status))}</td>
+        </tr>`).join("");
+
+      return `
+        <div class="an-updated">Updated ${escapeHtml(nowTime())} · rate ${fmtMoney(d.rate_per_hour)} per hour</div>
+
+        <h3 class="an-title">Revenue</h3>
+        <div class="an-stats">
+          ${statCard("Total revenue", fmtMoney(rev.total), "All bookings except cancelled", true)}
+          ${statCard("This month", fmtMoney(rev.month))}
+          ${statCard("Today", fmtMoney(rev.today))}
+          ${statCard("Average booking", fmtMoney(rev.average_booking))}
+          ${statCard("Payments received", fmtMoney(rev.collected))}
+          ${statCard("Payments pending", fmtMoney(rev.pending))}
+          ${statCard("Refunded", fmtMoney(rev.refunded))}
+          ${statCard("Bookings counted", fmtInt(bk.valid), fmtInt(bk.cancelled) + " cancelled")}
+        </div>
+
+        <h3 class="an-title">Parking slots</h3>
+        <div class="an-stats">
+          ${statCard("Active slots", fmtInt(sl.active), fmtInt(sl.inactive) + " inactive")}
+          ${statCard("In use right now", fmtInt(sl.occupied))}
+          ${statCard("Available right now", fmtInt(sl.available))}
+          ${statCard("Upcoming bookings", fmtInt(bk.upcoming), fmtInt(bk.active_now) + " active now")}
+          ${statCard("Registered users", fmtInt(d.people.users))}
+          ${statCard("Registered vehicles", fmtInt(d.people.vehicles))}
+        </div>
+
+        <div class="an-grid">
+          <div class="an-card an-wide">
+            <h4>Revenue · last 14 days</h4>
+            ${barChartSvg(dayItems, fmtMoney, 1)}
+          </div>
+
+          <div class="an-card an-wide">
+            <h4>Bookings by start hour</h4>
+            ${barChartSvg(hourItems, v => fmtInt(v) + " bookings", 3)}
+          </div>
+
+          <div class="an-card">
+            <h4>Slot occupancy right now</h4>
+            <div class="donut-row">
+              ${donutSvg(sl.occupied, sl.active)}
+              <div class="donut-legend">
+                <div><strong>${fmtInt(sl.occupied)}</strong> in use</div>
+                <div><strong>${fmtInt(sl.available)}</strong> available</div>
+                <div><strong>${fmtInt(sl.active)}</strong> active slots</div>
+              </div>
+            </div>
+            <div class="hbars">${hBars(typeBars)}</div>
+          </div>
+
+          <div class="an-card">
+            <h4>Revenue by location</h4>
+            <div class="hbars">${hBars(lotBars)}</div>
+          </div>
+
+          <div class="an-card an-wide">
+            <h4>Bookings by status</h4>
+            <div class="hbars">${hBars(statusBars)}</div>
+          </div>
+        </div>
+
+        <h3 class="an-title">Locations in numbers</h3>
+        <div class="an-table-wrap">
+          <table class="an-table">
+            <thead><tr><th>Location</th><th>Slots</th><th>In use</th><th>Available</th><th>Bookings</th><th>Revenue</th></tr></thead>
+            <tbody>${lotRows || '<tr><td colspan="6">No locations yet.</td></tr>'}</tbody>
+          </table>
+        </div>
+
+        <h3 class="an-title">Latest bookings</h3>
+        <div class="an-table-wrap">
+          <table class="an-table">
+            <thead><tr><th>ID</th><th>User</th><th>Location</th><th>Space</th><th>Vehicle</th><th>Start</th><th>Amount</th><th>Status</th></tr></thead>
+            <tbody>${recentRows || '<tr><td colspan="8">No bookings yet.</td></tr>'}</tbody>
+          </table>
+        </div>
+      `;
+    }
+
+    function setupAnalytics() {
+      $("analyticsRefresh").addEventListener("click", loadAnalytics);
+
+      loadAnalytics();
+    }
+
+    async function loadAnalytics() {
+      const body = $("analyticsBody");
+
+      if (!body) return;
+
+      body.innerHTML = '<div class="empty-state">Loading analytics...</div>';
+
+      try {
+        const data = await api("/admin/analytics");
+
+        if (state.screen !== "analytics") return;
+
+        body.innerHTML = renderAnalytics(data);
+
+      } catch (err) {
+        if (state.screen !== "analytics") return;
+
+        body.innerHTML =
+          `<div class="empty-state">${escapeHtml(err.message)}</div>`;
+      }
+    }
+
+    // ----------------------------------
     // GLOBAL CLICK EVENTS
     // ----------------------------------
 
@@ -2980,6 +3836,10 @@
 
       if (action === "reservations") {
         loadScreen("reservations");
+      }
+
+      if (action === "analytics") {
+        loadScreen("analytics");
       }
 
       if (action === "home") {
@@ -3022,8 +3882,13 @@
         try {
           const data = await api("/auth/me");
 
+          const wasAdmin = isAdmin();
+
           state.user = data.user;
           session.save(session.token, data.user);
+
+          // Re-draw the home screen if the saved login turned out different.
+          if (state.screen === "home" && wasAdmin !== isAdmin()) loadScreen("home");
         } catch {
           /* api() already cleared an invalid session */
         }
